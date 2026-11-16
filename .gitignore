@@ -2,3 +2,6 @@
 __pycache__/
 *.pyc
 scrape.log
+scrape.log.*
+.serena/
+agent_logs/
