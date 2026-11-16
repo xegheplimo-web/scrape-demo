@@ -28,6 +28,10 @@ python -m venv .venv
 pip install -r requirements.txt
 ```
 
+> **Lưu ý quan trọng:** phải chạy trong `.venv` (hoặc đã `pip install -r requirements.txt`).
+> Nếu gọi `python`/`pytest` của Python hệ thống, bạn sẽ gặp
+> `ModuleNotFoundError: No module named 'bs4'` — đó không phải lỗi code.
+
 ## Chạy thử
 
 ```bash
