@@ -5,7 +5,7 @@ Uses a saved copy of the catalogue page — no network access in tests.
 
 from pathlib import Path
 
-import sites.books as books
+from sites import books
 
 FIXTURE = Path(__file__).parent / "fixtures" / "books_page.html"
 BASE_URL = "https://books.toscrape.com/"

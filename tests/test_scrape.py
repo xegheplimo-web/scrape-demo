@@ -6,6 +6,7 @@ A FakeSession stands in for requests.Session — no network in tests.
 import csv
 import logging
 from types import SimpleNamespace
+from typing import ClassVar
 from urllib import robotparser
 
 import pytest
@@ -88,9 +89,7 @@ def test_get_does_not_retry_on_4xx(scraper):
 def test_get_respects_robots_disallow():
     session = FakeSession(
         {
-            "http://x/robots.txt": response(
-                200, "User-agent: *\nDisallow: /private\n"
-            ),
+            "http://x/robots.txt": response(200, "User-agent: *\nDisallow: /private\n"),
             "http://x/private/page": response(200),
         }
     )
@@ -115,7 +114,10 @@ def test_robots_404_means_allow_all():
         }
     )
     s = scrape.Scraper(
-        session, delay=0, backoff=0, sleep=lambda _: None,
+        session,
+        delay=0,
+        backoff=0,
+        sleep=lambda _: None,
         logger=logging.getLogger("test"),
     )
     s.load_robots("http://x/")
@@ -130,7 +132,10 @@ def test_robots_unreachable_means_allow_all():
         }
     )
     s = scrape.Scraper(
-        session, delay=0, backoff=0, sleep=lambda _: None,
+        session,
+        delay=0,
+        backoff=0,
+        sleep=lambda _: None,
         logger=logging.getLogger("test"),
     )
     s.load_robots("http://x/")
@@ -160,7 +165,7 @@ def test_delay_between_requests():
 
 def test_collect_stops_on_next_page_cycle():
     class LoopAdapter:
-        FIELDS = ["x"]
+        FIELDS: ClassVar[list[str]] = ["x"]
 
         def parse_records(self, html, url):
             return [{"x": url}]
@@ -170,7 +175,10 @@ def test_collect_stops_on_next_page_cycle():
 
     scraper = SimpleNamespace(get=lambda url: "<html></html>")
     records, pages = scrape.collect(
-        scraper, LoopAdapter(), "http://x/", max_pages=10,
+        scraper,
+        LoopAdapter(),
+        "http://x/",
+        max_pages=10,
         logger=logging.getLogger("test"),
     )
     assert pages == 1

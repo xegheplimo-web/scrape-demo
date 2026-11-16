@@ -1,5 +1,9 @@
 # scrape-demo — Tool cào dữ liệu thương mại (bản demo)
 
+[![CI](https://github.com/xegheplimo-web/scrape-demo/actions/workflows/ci.yml/badge.svg)](https://github.com/xegheplimo-web/scrape-demo/actions/workflows/ci.yml)
+[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+[![Python](https://img.shields.io/badge/python-3.11%20%7C%203.12%20%7C%203.13-blue.svg)](https://www.python.org)
+
 Scraper Python "lịch sự" (polite crawler): tôn trọng `robots.txt`, delay giữa các
 request, retry/backoff khi lỗi mạng, log xoay vòng, test offline — kèm adapter
 mẫu cho `books.toscrape.com` (site công khai dành cho việc luyện cào dữ liệu).
@@ -94,3 +98,13 @@ requirements.txt        requests, beautifulsoup4, pytest
   log); site có rule chặn thật sẽ bị chặn đúng ở tầng `can_fetch`.
 - Format `price`/`rating` được chuẩn hoá theo từng adapter (ví dụ books:
   `£51.77` → `51.77`, rating 1–5).
+
+## Giấy phép
+
+MIT — xem [LICENSE](LICENSE). Dùng lại tự do, giữ nguyên dòng bản quyền.
+
+## Vì sao repo này công khai
+
+Đây là demo tôi dùng khi chào khách: cùng một bộ khung (fetch/retry/robots/CSV/log)
+được tái sử dụng, chỉ thay adapter cho từng site. Toàn bộ test chạy offline bằng
+fixture HTML lưu sẵn, nên bạn clone về là chạy được test ngay, không cần mạng.

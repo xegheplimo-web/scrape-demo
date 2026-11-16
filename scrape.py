@@ -139,7 +139,9 @@ class Scraper:
                     timeout=self.timeout,
                 )
             except requests.RequestException as exc:
-                self._retry_or_raise(url, attempt, attempts, f"{type(exc).__name__}: {exc}")
+                self._retry_or_raise(
+                    url, attempt, attempts, f"{type(exc).__name__}: {exc}"
+                )
                 continue
             if resp.status_code < 400:
                 how = "no retry" if attempt == 1 else f"retried {attempt - 1}x"
@@ -155,7 +157,9 @@ class Scraper:
             if resp.status_code == 429 or resp.status_code >= 500:
                 self._retry_or_raise(url, attempt, attempts, f"HTTP {resp.status_code}")
                 continue
-            self.log.error("GET %s -> HTTP %d (client error, not retrying)", url, resp.status_code)
+            self.log.error(
+                "GET %s -> HTTP %d (client error, not retrying)", url, resp.status_code
+            )
             raise FetchError(f"{url}: HTTP {resp.status_code}")
         raise FetchError(f"{url}: exhausted retries")  # pragma: no cover
 
